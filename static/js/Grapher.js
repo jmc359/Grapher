@@ -77,6 +77,7 @@ function init()
 	// GUI
 
 	var gui = new dat.GUI();
+	var gui1 = new dat.GUI();
 	var input =
 	{
 		equation: "sqrt(x^2+y^2)", // string for equation
@@ -93,7 +94,6 @@ function init()
 		cameraY: function() { cameraY(); },
 		cameraReset: function() { cameraReset(); }
 	};
-
 	// Input menu
 
 	gui.add(input, 'equation').name('z(x,y) =');
@@ -116,6 +116,7 @@ function init()
 	// Parsing + Graphing
 
 	function createSurface(){
+		//gui1.listen();
 		var x_range = input.x_max - input.x_min;
 		var y_range = input.y_max - input.y_min;
 		var grid_x = x_range / input.divisions;
@@ -146,6 +147,30 @@ function init()
 		geom.verticesNeedUpdate = true;
 		geom.computeVertexNormals();
 		scene.add(pointCloud);
+
+		var history =
+		{
+			graph: input.equation,
+			toggle: true
+		}
+		var update = function() {
+			gui1.add(history, 'graph').name('z(x,y) =');
+			var visible = gui1.add(history, 'toggle').name('Show/Hide');
+
+			visible.onChange(function(value) {
+				if (value)
+				{
+					scene.add(pointCloud);
+					value = true;
+				}
+				else
+				{
+					scene.remove(pointCloud);
+					value = false;
+				}
+			});
+		};
+		update();
 	}
 
 	function cameraTop (){
