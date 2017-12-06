@@ -23,7 +23,7 @@ function init()
 	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 5100;
 	camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
 	scene.add(camera);
-	camera.position.set(150,150,150);
+	camera.position.set(170,170,170);
 	camera.lookAt(scene.position);
 
 	// Renderer
@@ -78,6 +78,7 @@ function init()
 
 	var gui = new dat.GUI();
 	var gui1 = new dat.GUI();
+
 	var input =
 	{
 		equation: "sqrt(x^2+y^2)", // string for equation
@@ -94,7 +95,8 @@ function init()
 		cameraY: function() { cameraY(); },
 		cameraReset: function() { cameraReset(); }
 	};
-	// Input menu
+
+	// Input menus
 
 	gui.add(input, 'equation').name('z(x,y) =');
 	gui.add(input, 'x_min').name('X min');
@@ -113,10 +115,11 @@ function init()
 	f1.add(input, 'cameraReset').name("Reset View");
 	gui.open();
 
+	var f2 = gui1.addFolder('Functions');
+
 	// Parsing + Graphing
 
 	function createSurface(){
-		//gui1.listen();
 		var x_range = input.x_max - input.x_min;
 		var y_range = input.y_max - input.y_min;
 		var grid_x = x_range / input.divisions;
@@ -132,8 +135,8 @@ function init()
 				var code = node.compile();
 				var z = code.eval(scope);
 				if (!isNaN(z)){
-					// y and z are switched graphically in three.js coordinates
-					geom.vertices.push(new THREE.Vector3(var_x, z, var_y));
+					// x, y, and z are switched graphically in three.js coordinates
+					geom.vertices.push(new THREE.Vector3(var_y, z, var_x));
 				}
 			}
 		}
@@ -147,16 +150,13 @@ function init()
 		geom.verticesNeedUpdate = true;
 		geom.computeVertexNormals();
 		scene.add(pointCloud);
+		f1.open();
+		f2.open();
 
-		var history =
-		{
-			graph: input.equation,
-			toggle: true
-		}
+		// Function show/hide
+
 		var update = function() {
-			gui1.add(history, 'graph').name('z(x,y) =');
-			var visible = gui1.add(history, 'toggle').name('Show/Hide');
-
+			var visible = f2.add({toggle: true}, 'toggle').name(input.equation);
 			visible.onChange(function(value) {
 				if (value)
 				{
@@ -176,17 +176,21 @@ function init()
 	function cameraTop (){
 		camera.position.set(0,200,0);
 	}
+
 	function cameraBottom (){
 		camera.position.set(0,-200,0);
 	}
+
 	function cameraX (){
-		camera.position.set(200,0,0);
-	}
-	function cameraY (){
 		camera.position.set(0,0,200);
 	}
+
+	function cameraY (){
+		camera.position.set(200,0,0);
+	}
+
 	function cameraReset (){
-		camera.position.set(150,150,150);
+		camera.position.set(170,170,170);
 	}
 }
 
