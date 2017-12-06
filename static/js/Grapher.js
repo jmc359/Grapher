@@ -186,7 +186,7 @@ function init()
 	}
 
 	function cameraY (){
-		camera.position.set(200,0,0);
+		camera.position.set(-200,0,0);
 	}
 
 	function cameraReset (){
