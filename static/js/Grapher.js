@@ -119,20 +119,26 @@ function init()
 	// Parsing + Graphing
 
 	function createSurface(){
+		// Range of x, y values
 		var x_range = input.x_max - input.x_min;
 		var y_range = input.y_max - input.y_min;
+		// Distance between each point in x, y direction
 		var grid_x = x_range / input.divisions;
 		var grid_y = y_range / input.divisions;
 		var geom = new THREE.Geometry();
+		// For each point in x, y range
 		for (var_x = input.x_min; var_x <= input.x_max; var_x += grid_x){
 			for (var_y = input.y_min; var_y <= input.y_max; var_y += grid_y){
 				var scope = {
 				    x: var_x,
 				    y: var_y
 				};
+				// Parse user inputted equation
 				var node = math.parse(input.equation, scope);
 				var code = node.compile();
+				// Determine z value
 				var z = code.eval(scope);
+				// If z is a number
 				if (!isNaN(z)){
 					// x, y, and z are switched graphically in three.js coordinates
 					geom.vertices.push(new THREE.Vector3(var_y, z, var_x));
@@ -140,22 +146,27 @@ function init()
 			}
 		}
 
+		// Each point has color designated by the user and size of 1.2
 		var tmaterial = new THREE.PointsMaterial({
 		    color: input.f_color,
 		    size: 1.2,
 		});
 
+		// Create Point Cloud
 		var pointCloud = new THREE.Points(geom, tmaterial);
 		geom.verticesNeedUpdate = true;
 		geom.computeVertexNormals();
 		scene.add(pointCloud);
+
+		// Open Input Menus
 		f1.open();
 		f2.open();
 
 		// Function show/hide
-
 		var update = function() {
+			// When a function is graphed, add it and a checkbox to f2
 			var visible = f2.add({toggle: true}, 'toggle').name(input.equation);
+			// When the row is clicked
 			visible.onChange(function(value) {
 				if (value)
 				{
