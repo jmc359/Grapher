@@ -1,5 +1,4 @@
 // 3D Grapher in Three.JS
-// Upon entering a function, the user can visualize the equation graphically in this flask web app
 
 
 // Standard global variables / Functions
@@ -54,7 +53,7 @@ function init()
 	stats.domElement.style.zIndex = 100;
 	container.appendChild(stats.domElement);
 
-	// Scene
+	// Coordinate Axes
 
 	var axes = new THREE.AxesHelper(120);
 	axes.position.set(0,0,0);
@@ -173,6 +172,8 @@ function init()
 		update();
 	}
 
+	// Camera Perspectives
+
 	function cameraTop (){
 		camera.position.set(0,200,0);
 	}
@@ -194,6 +195,8 @@ function init()
 	}
 }
 
+// Bring App to Life
+
 function animate()
 {
     requestAnimationFrame(animate);
@@ -201,11 +204,15 @@ function animate()
 	update();
 }
 
+// Update Controls and Stats
+
 function update()
 {
 	controls.update();
 	stats.update();
 }
+
+// Render Scene
 
 function render()
 {
