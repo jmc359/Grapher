@@ -32,7 +32,6 @@ The more divisions, the less grainy the graph will look. However, the amount of 
 Notice that multiple functions may be graphed simultaneously. A list of functions you've graphed will appear under the Functions
 folder. Clicking the checkbox next to a function will toggle its visibility.
 
-## Acknowledgements
 
 
 
