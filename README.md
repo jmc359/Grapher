@@ -4,6 +4,8 @@ Flask web app that allows the user to visualize inputted functions of up to 2 va
 to create and display 3D graphics as well as [math.js](http://mathjs.org/) for its expression parser and built in
 functions/constants.
 
+Watch a demo [here](https://youtu.be/NSS_rw8p0TI)
+
 ## Getting Started
 
 These steps will get you a copy of the project up and running on your local IDE for testing and development purposes.

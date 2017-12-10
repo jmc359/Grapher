@@ -183,6 +183,10 @@ function init()
 		update();
 	}
 
+	function findExtrema (){
+
+	}
+
 	// Camera Perspectives
 
 	function cameraTop (){
